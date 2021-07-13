@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,  login, logout
 from django.contrib.auth.forms import UserChangeForm
 from marksApp.models import studentInfo,Standerd, subject, Marks
-from marksApp.forms import standerdForm, subjectForm
+from marksApp.forms import standerdForm, subjectForm, studentForm
 from django.http import HttpResponse
 from django.contrib import messages
 
@@ -28,9 +28,12 @@ def userHome(request):
     context={'allStanderd':allStanderd,'standerdForm':stdForm }
     return render(request, 'MarksApp/home.html',context)
 
+#standerd page handling function
+
 def standerdHandling(request,StanderdId):
 
     subForm = subjectForm()
+    stdForm=studentForm()
 
     if request.POST.get("deleteSubject"):
         subject.objects.filter(id=request.POST.get("deleteSubject")).delete()
@@ -44,6 +47,21 @@ def standerdHandling(request,StanderdId):
             fromSave.save()
         return redirect('/'+str(StanderdId))
 
+    if request.POST.get("deleteStudent"):
+        studentInfo.objects.filter(HR_No=request.POST.get("deleteStudent")).delete()
+
+
+    if request.POST.get("AddNewStudent"):
+        form = studentForm(request.POST)
+        if form.is_valid():
+            fromSave=form.save(commit=False)
+            fromSave.studentStd = Standerd.objects.get(Id=StanderdId)
+            fromSave.save()
+        return redirect('/'+str(StanderdId))
+
     allSubject = subject.objects.filter(subjectStd=StanderdId)
-    context={'allSubject':allSubject,'subjectForm':subForm,'StanderdId':StanderdId } 
+    allStudent = studentInfo.objects.filter(studentStd=StanderdId)
+
+    context={'allSubject':allSubject,'subjectForm':subForm,'StanderdId':StanderdId,'studentForm':stdForm, 'allStudent':allStudent, } 
+
     return render(request, 'MarksApp/standerdDetails.html',context)

@@ -11,3 +11,8 @@ class subjectForm(forms.ModelForm):
     class Meta:
         model = subject
         fields = ('subject_Name',)
+
+class studentForm(forms.ModelForm):
+    class Meta:
+        model = studentInfo
+        fields = ('HR_No','first_name','Middle_name','Last_name','Room_No',)
