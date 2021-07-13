@@ -36,7 +36,7 @@ class studentInfo(models.Model):
 class subject(models.Model):
     id=models.AutoField(primary_key=True)
     subject_Name=models.CharField(max_length=30)
-    studentStd=models.ForeignKey(Standerd, on_delete=models.CASCADE)
+    subjectStd=models.ForeignKey(Standerd, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.subject_Name

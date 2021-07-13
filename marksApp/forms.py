@@ -6,3 +6,8 @@ class standerdForm(forms.ModelForm):
     class Meta:
         model = Standerd
         fields = ('Std','Medium','Div',)
+
+class subjectForm(forms.ModelForm):
+    class Meta:
+        model = subject
+        fields = ('subject_Name',)
