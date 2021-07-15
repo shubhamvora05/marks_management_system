@@ -13,7 +13,6 @@ from django.contrib import messages
 def userHome(request):
 
     stdForm = standerdForm()
-
     if request.POST.get("deleteStanderd"):
         Standerd.objects.filter(Id=request.POST.get("deleteStanderd")).delete()
 
