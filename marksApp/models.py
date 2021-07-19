@@ -15,7 +15,7 @@ class Standerd(models.Model):
 
     Id=models.AutoField(primary_key=True)
     Std=models.PositiveIntegerField()
-    Medium=models.CharField(max_length=11, choices=MediumOfStudent, default=GSEB)
+    Medium=models.CharField(max_length=11, choices=MediumOfStudent, default = GSEB)
     Div=models.CharField(max_length=10, blank=True, null=True)  
 
     def __str__(self):
@@ -40,14 +40,24 @@ class subject(models.Model):
 
     def __str__(self):
         return self.subject_Name
+        
+
+class marksRecord(models.Model):
+    Id=models.AutoField(primary_key=True)
+    totalMarks=models.PositiveIntegerField()
+    date=models.DateField()
+    Subject=models.ForeignKey(subject,on_delete=models.CASCADE)
+
+    def __str__(self):
+        record = str(self.date) +" "+str(self.totalMarks)
+        return record
 
 class Marks(models.Model):
     Id=models.AutoField(primary_key=True)
-    totalMarks=models.PositiveIntegerField()
     achivedMarks=models.PositiveIntegerField()
-    date=models.DateField()
-    Subject=models.ForeignKey(subject,on_delete=models.CASCADE)
     Student=models.ForeignKey(studentInfo,on_delete=models.CASCADE)
-
+    totalMarks=models.ForeignKey(marksRecord, on_delete=models.CASCADE)
+    
     def __str__(self):
-        return str(self.achivedMarks)
+        record = str(self.totalMarks.date) +" "+str(self.achivedMarks)
+        return record

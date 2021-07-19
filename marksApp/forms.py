@@ -1,5 +1,5 @@
 from django import forms
-from marksApp.models import studentInfo,Standerd, subject, Marks
+from marksApp.models import studentInfo,Standerd, subject, Marks, marksRecord
 
 
 class standerdForm(forms.ModelForm):
@@ -16,3 +16,8 @@ class studentForm(forms.ModelForm):
     class Meta:
         model = studentInfo
         fields = ('HR_No','first_name','Middle_name','Last_name','Room_No',)
+
+class marksForm(forms.ModelForm):
+    class Meta:
+        model = Marks
+        fields= ('achivedMarks',)
