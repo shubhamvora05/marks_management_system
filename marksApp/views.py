@@ -25,7 +25,7 @@ def userHome(request):
         return redirect('/')
 
     allStanderd = Standerd.objects.all()
-    context={'allStanderd': allStanderd,'standerdForm': stdForm }
+    context={'allStanderd':allStanderd,'standerdForm':stdForm }
     return render(request, 'MarksApp/home.html',context)
 
 #standerd page handling function
@@ -43,7 +43,7 @@ def standerdHandling(request,StanderdId):
         form = subjectForm(request.POST)
         if form.is_valid():
             fromSave=form.save(commit=False)
-            fromSave.subjectStd = Standerd.objects.get(Id=StanderdId)
+            fromSave.subjectStd = Standerd.objects.get(Id = StanderdId)
             fromSave.save()
         return redirect('/'+str(StanderdId))
 
@@ -84,7 +84,7 @@ def subjectHandling(request,StanderdId,subjectId):
     if request.POST.get("deleteMarksRecord"):
         marksRecord.objects.filter(Id=request.POST.get("deleteMarksRecord")).delete()
 
-    AllMarksRecords = marksRecord.objects.all()
+    AllMarksRecords = marksRecord.objects.filter(Subject=subjectId)
 
     context={'Subject':currentSubject,'Standerd':currentStanderd,'marksRecords':AllMarksRecords, } 
 
@@ -100,9 +100,16 @@ def addAndupdateMarks(request,StanderdId,subjectId,marksrecordId):
     currentRecord = marksRecord.objects.get(Id=marksrecordId)
 
     if request.POST.get("AddMarksStudent"):
+        print(request.POST['AddMarksStudent'])
+        MarksRecordToAdd=marksRecord.objects.get(Id=request.POST['AddMarksStudent'])
         for student in allStudent:
-             x='AchivedMarks'+ student.HR_No
-             print(request.POST[x])
+            x='AchivedMarks'+ student.HR_No
+            achivedMarks = request.POST[x]
+            MarksObject = Marks.objects.create(achivedMarks=achivedMarks,Student=student,totalMarks=MarksRecordToAdd)
+            MarksObject.save()
+             
+        print(request.POST[x])
+        
 
     context={'allStudent':allStudent,'Subject':currentSubject,'Standerd':currentStanderd,'Record':currentRecord } 
 

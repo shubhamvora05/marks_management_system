@@ -47,7 +47,7 @@
       {% for Student in allStudent %}
         <center><p>{{Student.first_name}}  {{Student.Middle_name}}  {{Student.Last_name}}</p>
         <p>{{Student.Room_No}}</p>
-        <input type="number" name="AchivedMarks{{Student.HR_No}}" min="0" max="30">   
+        <input type="number" name="AchivedMarks{{Student.HR_No}}" min="0" max="{{Record.totalMarks}}">   
       </center>
       
       {% if forloop.counter|divisibleby:1%}
@@ -55,7 +55,7 @@
     <div class="rowCrop">
       {% endif %}
       {% endfor %}
-      <button type=submit name='AddMarksStudent' value='1'>update</button>
+      <button type=submit name='AddMarksStudent' value='{{Record.Id}}'>update</button>
     </form> 
   </div>
 </div>
