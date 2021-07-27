@@ -71,8 +71,6 @@ Add new Standerd
   </div>
 </div>
 
-
-        
       
 
 <!--standerd showing on the homepage-->
@@ -83,23 +81,48 @@ Add new Standerd
      <a href="/{{Standerd.Id}}"> <div class="colCrop">
           <center><h3>{{Standerd.Std}} - {{Standerd.Div}}</h3>
       
-    <h5>{{Standerd.Medium}}</h5></center>
+    <h5>{{Standerd.Medium}}</h5></center></a>
     <form action="/" method="POST">
     {% csrf_token %}
     <button type=submit name='deleteStanderd' value='{{Standerd.Id}}'>Delete</button>
     </form>
-    </a>
+   <button type="button" class="btn mr-2 " style="background-color:lightblue" data-toggle="modal" data-target="#updatestanderdModal{{Standerd.Id}}">
+  update
+  </button>
 
+  <!--update standerd modal-->
+
+<div class="modal fade" id="updatestanderdModal{{Standerd.Id}}" tabindex="-1" aria-labelledby="updatestanderdModal{{Standerd.Id}}" aria-hidden="true">
+
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updatestanderdModalTitle{{Standerd.Id}}">update the standerd</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form action= "/" method='post' enctype="multipart/form-data">
+           {% csrf_token %}
+           {{standerdForm.as_p}}           
+        <button type=submit name="updateStanderd" value="{{Standerd.Id}}" class="btn btn-primary">Update</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+      
       </div>
       {% if forloop.counter|divisibleby:4%}
   </div>
     <div class="rowCrop">
-      {% endif %}
+      {% endif %} 
       {% endfor %}
   </div>
 </div>
-
-
 
 
 

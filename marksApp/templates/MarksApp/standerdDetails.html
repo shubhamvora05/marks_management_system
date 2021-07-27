@@ -75,14 +75,43 @@ Add new Subject
 <div class="containerCrop">
   <div class="rowCrop">
       {% for Subject in allSubject %}
+      
      <a href="{% url 'subjectHandling' StanderdId=StanderdId subjectId=Subject.id %}"> <div class="colCrop">
           <center><h3>{{Subject.subject_Name}}</h3>
       </center>
-    <form action="/{{StanderdId}}" method="POST">
+    </a>
+<form action="/{{StanderdId}}" method="POST">
     {% csrf_token %}
     <button type=submit name='deleteSubject' value='{{Subject.id}}'>Delete</button>
     </form>
-    </a>
+    <button type="button" class="btn mr-2 " style="background-color:lightblue" data-toggle="modal" data-target="#updatesubjectModal{{Subject.id}}">
+  update
+  </button>
+
+  <!--update subject modal-->
+
+<div class="modal fade" id="updatesubjectModal{{Subject.id}}" tabindex="-1" aria-labelledby="updatesubjectModal{{Subject.id}}" aria-hidden="true">
+
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updatesubjectModal{{Subject.id}}">update the subject</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form action= "/{{StanderdId}}" method='post' enctype="multipart/form-data">
+           {% csrf_token %}
+           {{subjectForm.as_p}}         
+        <button type=submit name="updateSubject" value="{{Subject.id}}" class="btn btn-primary">Update</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 
       </div>
       {% if forloop.counter|divisibleby:4%}
@@ -143,7 +172,7 @@ Add new student
 <div class="containerCrop">
   <div class="rowCrop">
      {% for Student in allStudent %}
-     
+     <div class="colCrop">
       <center><p>{{Student.first_name}}  {{Student.Middle_name}}  {{Student.Last_name}}</p>
           <p>{{Student.Room_No}}</p>
       </center>
@@ -151,6 +180,34 @@ Add new student
     {% csrf_token %}
     <button type=submit name='deleteStudent' value='{{Student.HR_No}}'>Delete</button>
     </form>
+
+    <button type="button" class="btn mr-2 " style="background-color:lightblue" data-toggle="modal" data-target="#updatestudentModal{{Student.HR_No}}">
+  update
+  </button>
+
+  <!--update student modal-->
+
+<div class="modal fade" id="updatestudentModal{{Student.HR_No}}" tabindex="-1" aria-labelledby="updatestudentModal{{Student.HR_No}}" aria-hidden="true">
+
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updatestudentModal{{Student.HR_No}}">update student information</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form action= "/{{StanderdId}}" method='post' enctype="multipart/form-data">
+           {% csrf_token %}
+           {{studentForm.as_p}}      
+        <button type=submit name="updateStudent" value="{{Student.HR_No}}" class="btn btn-primary">Update</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
       </div>
       {% if forloop.counter|divisibleby:1%}
   </div>

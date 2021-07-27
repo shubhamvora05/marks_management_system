@@ -1,11 +1,7 @@
-{% extends "MarksApp/base.html" %}
-
-{% block title%}subject page{% endblock  %}
-
-{% block body %}
+{% extends "MarksApp/base.html" %} {% block title%}subject page{% endblock %} {% block body %}
 
 <style>
-.colCrop {
+  .colCrop {
     width: 208px;
     -ms-flex-preferred-size: 0;
     /* flex-basis: 0; */
@@ -16,29 +12,39 @@
     background: whitesmoke;
     padding: 10px;
     margin: 5px;
-}
-.rowCrop {
+  }
+  .rowCrop {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    margin:10px 15px;
-
-}
-.containerCrop {
+    margin: 10px 15px;
+  }
+  .containerCrop {
     max-width: 100%;
-}
-
+  }
 </style>
 
 <!--taking total marks and date of test form-->
 
-<button type="button" class="btn mr-2 " style="background-color:lightblue" data-toggle="modal" data-target="#marksRecordModal">
-Add new record
+<button
+  type="button"
+  class="btn mr-2"
+  style="background-color: lightblue"
+  data-toggle="modal"
+  data-target="#marksRecordModal"
+>
+  Add new record
 </button>
 
-<div class="modal fade" id="marksRecordModal" tabindex="-1" aria-labelledby="marksRecordModal" aria-hidden="true">
+<div
+  class="modal fade"
+  id="marksRecordModal"
+  tabindex="-1"
+  aria-labelledby="marksRecordModal"
+  aria-hidden="true"
+>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -48,51 +54,126 @@ Add new record
         </button>
       </div>
       <div class="modal-body">
+        <!--Add new student Form-->
 
-<!--Add new student Form-->
+        <form
+          action="{% url 'subjectHandling' StanderdId=Standerd.Id subjectId=Subject.id %}"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          {% csrf_token %}
 
-        <form action= "{% url 'subjectHandling' StanderdId=Standerd.Id subjectId=Subject.id %}" method='post' enctype="multipart/form-data">
-           {% csrf_token %}
-           
-  <div class="form-group">
-    <label for="formGroupExampleInput">Total marks</label>
-    <input type="number" class="form-control" name="TotalMarks" min="1" placeholder="Total marks">
-  </div>
-  <div class="form-group">
-    <label for="formGroupExampleInput2">Date</label>
-    <input type="date" class="form-control" name="CurrentDate" placeholder="Date">
-  </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput">Total marks</label>
+            <input
+              type="number"
+              class="form-control"
+              name="TotalMarks"
+              min="1"
+              placeholder="Total marks"
+            />
+          </div>
+          <div class="form-group">
+            <label for="formGroupExampleInput2">Date</label>
+            <input type="date" class="form-control" name="CurrentDate" placeholder="Date" />
+          </div>
 
-        <button type="submit" name="AddNewMarksRecord" value="1" class="btn btn-primary">Submit</button>
+          <button type="submit" name="AddNewMarksRecord" value="1" class="btn btn-primary">
+            Submit
+          </button>
         </form>
-
       </div>
     </div>
   </div>
 </div>
 
-
-
 <!--marks record showing on each subject page-->
 
 <div class="containerCrop">
   <div class="rowCrop">
-      {% for Record in marksRecords %}
-     
-          <center><a href="{% url 'addAndupdateMarks' StanderdId=Standerd.Id subjectId=Subject.id marksrecordId=Record.Id%}"><p>{{Record.totalMarks}}  {{Record.date}} </p>
-          </a>
+    {% for Record in marksRecords %}
+    <div class="colCrop">
+      <center>
+        <a
+          href="{% url 'addAndupdateMarks' StanderdId=Standerd.Id subjectId=Subject.id marksrecordId=Record.Id%}"
+          ><p>{{Record.totalMarks}} {{Record.date}}</p>
+        </a>
       </center>
-    <form action="{% url 'subjectHandling' StanderdId=Standerd.Id subjectId=Subject.id %}" method="POST">
-    {% csrf_token %}
-    <button type=submit name='deleteMarksRecord' value='{{Record.Id}}'>Delete</button>
-    </form>
-      {% if forloop.counter|divisibleby:1%}
-  </div>
-    <div class="rowCrop">
-      {% endif %}
-      {% endfor %}
-  </div>
-</div>
+      <form
+        action="{% url 'subjectHandling' StanderdId=Standerd.Id subjectId=Subject.id %}"
+        method="POST"
+      >
+        {% csrf_token %}
+        <button type="submit" name="deleteMarksRecord" value="{{Record.Id}}">Delete</button>
+      </form>
 
+      <button
+        type="button"
+        class="btn mr-2"
+        style="background-color: lightblue"
+        data-toggle="modal"
+        data-target="#updateMarksRecordModal{{Record.Id}}"
+      >
+        update
+      </button>
+
+      <!--update marks record modal-->
+
+      <div
+        class="modal fade"
+        id="updateMarksRecordModal{{Record.Id}}"
+        tabindex="-1"
+        aria-labelledby="updateMarksRecordModal{{Record.Id}}"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="updateMarksRecordModal{{Record.Id}}">
+                update marks record
+              </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form
+                action="{% url 'subjectHandling' StanderdId=Standerd.Id subjectId=Subject.id %}"
+                method="post"
+                enctype="multipart/form-data"
+              >
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="formGroupExampleInput">Total marks</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="TotalMarks"
+                    min="1"
+                    placeholder="Total marks"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="formGroupExampleInput2">Date</label>
+                  <input type="date" class="form-control" name="CurrentDate" placeholder="Date" />
+                </div>
+                <button
+                  type="submit"
+                  name="updateMarksRecord"
+                  value="{{Record.Id}}"
+                  class="btn btn-primary"
+                >
+                  Update
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% if forloop.counter|divisibleby:1%}
+  </div>
+  <div class="rowCrop">{% endif %} {% endfor %}</div>
+</div>
 
 {% endblock %}
