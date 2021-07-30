@@ -104,7 +104,8 @@ Add new Subject
 
         <form action= "/{{StanderdId}}" method='post' enctype="multipart/form-data">
            {% csrf_token %}
-           {{subjectForm.as_p}}         
+           {% comment %} {{subjectForm.as_p}}          {% endcomment %}
+           <p><label for="id_subject_Name">Subject Name:</label> <input type="text" name="subject_Name" value="{{Subject.subject_Name}}" maxlength="30" required id="id_subject_Name"></p>
         <button type=submit name="updateSubject" value="{{Subject.id}}" class="btn btn-primary">Update</button>
         </form>
       </div>
@@ -201,7 +202,12 @@ Add new student
 
         <form action= "/{{StanderdId}}" method='post' enctype="multipart/form-data">
            {% csrf_token %}
-           {{studentForm.as_p}}      
+           {% comment %} {{studentForm.as_p}}       {% endcomment %}
+            <p><label for="id_HR_No">HR No:</label> <input type="text" value="{{Student.HR_No}}" name="HR_No" maxlength="20" required id="id_HR_No"></p>
+            <p><label for="id_first_name">First name:</label> <input type="text" value="{{Student.first_name}}" name="first_name" maxlength="50" required id="id_first_name"></p>
+            <p><label for="id_Middle_name">Middle name:</label> <input type="text" value="{{Student.Middle_name}}" name="Middle_name" maxlength="50" required id="id_Middle_name"></p>
+            <p><label for="id_Last_name">Last name:</label> <input type="text" value="{{Student.Last_name}}" name="Last_name" maxlength="50" required id="id_Last_name"></p>
+            <p><label for="id_Room_No">Room No:</label> <input type="text" value="{{Student.Room_No}}" name="Room_No" maxlength="10" required id="id_Room_No"></p>
         <button type=submit name="updateStudent" value="{{Student.HR_No}}" class="btn btn-primary">Update</button>
         </form>
       </div>
