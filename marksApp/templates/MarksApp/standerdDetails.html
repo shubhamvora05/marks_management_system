@@ -32,6 +32,8 @@
 
 </style>
 
+<h2>{{currentStanderd.Std}} {{currentStanderd.Div}} {{currentStanderd.Medium}}</h2>
+
 <!--add new subject modal-->
 
 <div class="container mt-3">
@@ -179,21 +181,21 @@ Add new student
       </center>
     <form action="/{{StanderdId}}" method="POST">
     {% csrf_token %}
-    <button type=submit name='deleteStudent' value='{{Student.HR_No}}'>Delete</button>
+    <button type=submit name='deleteStudent' value='{{Student.id}}'>Delete</button>
     </form>
 
-    <button type="button" class="btn mr-2 " style="background-color:lightblue" data-toggle="modal" data-target="#updatestudentModal{{Student.HR_No}}">
+    <button type="button" class="btn mr-2 " style="background-color:lightblue" data-toggle="modal" data-target="#updatestudentModal{{Student.id}}">
   update
   </button>
 
   <!--update student modal-->
 
-<div class="modal fade" id="updatestudentModal{{Student.HR_No}}" tabindex="-1" aria-labelledby="updatestudentModal{{Student.HR_No}}" aria-hidden="true">
+<div class="modal fade" id="updatestudentModal{{Student.id}}" tidabindex="-1" aria-labelledby="updatestudentModal{{Student.id}}" aria-hidden="true">
 
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="updatestudentModal{{Student.HR_No}}">update student information</h5>
+        <h5 class="modal-title" id="updatestudentModal{{Student.id}}">update student information</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -208,7 +210,7 @@ Add new student
             <p><label for="id_Middle_name">Middle name:</label> <input type="text" value="{{Student.Middle_name}}" name="Middle_name" maxlength="50" required id="id_Middle_name"></p>
             <p><label for="id_Last_name">Last name:</label> <input type="text" value="{{Student.Last_name}}" name="Last_name" maxlength="50" required id="id_Last_name"></p>
             <p><label for="id_Room_No">Room No:</label> <input type="text" value="{{Student.Room_No}}" name="Room_No" maxlength="10" required id="id_Room_No"></p>
-        <button type=submit name="updateStudent" value="{{Student.HR_No}}" class="btn btn-primary">Update</button>
+        <button type=submit name="updateStudent" value="{{Student.id}}" class="btn btn-primary">Update</button>
         </form>
       </div>
     </div>

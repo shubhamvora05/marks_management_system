@@ -62,7 +62,7 @@ Add new Standerd
 
         <form action= "/" method='post' enctype="multipart/form-data">
            {% csrf_token %}
-          <p><label for="id_Std">Std:</label> <input type="number" name="Std" min="0" required id="id_Std"></p>
+          <p><label for="id_Std">Std:</label> <input type="number" name="Std" min="1" max="12" required id="id_Std"></p>
           <p><label for="id_Medium">Medium:</label> 
               <select name="Medium" id="id_Medium">
               <option value="CBSE">CBSE</option>
@@ -75,7 +75,7 @@ Add new Standerd
 
               </select>
             </p>
-            <p><label for="id_Div">Div:</label> <input type="text" name="Div" maxlength="10" id="id_Div"></p>
+            <p><label for="id_Div">Div:</label> <input type="text" name="Div" maxlength="1" style='text-transform:uppercase' id="id_Div"></p>
         <button type="submit" name="AddNewStanderd" value="1" class="btn btn-primary">Submit</button>
         </form>
 
@@ -122,7 +122,7 @@ Add new Standerd
            
            {% comment %} {{standerdForm.as_p}} {% endcomment %}
            
-            <p><label for="id_Std">Std:</label> <input type="number" value="{{Standerd.Std}}" name="Std" min="0" required id="id_Std"></p>
+            <p><label for="id_Std">Std:</label> <input type="number" value="{{Standerd.Std}}" name="Std" min="1" max="12" required id="id_Std"></p>
           <p><label for="id_Medium">Medium:</label> 
 
               <select name="Medium" id="id_Medium">
@@ -132,7 +132,7 @@ Add new Standerd
               <option value="Commerce">Commerce</option>
               </select>
             </p>
-            <p><label for="id_Div">Div:</label> <input type="text" value="{{Standerd.Div}}" name="Div" maxlength="10" id="id_Div"></p>
+            <p><label for="id_Div">Div:</label> <input type="text" value="{{Standerd.Div}}" name="Div" maxlength="1" id="id_Div" style='text-transform:uppercase'></p>
 
         <button type=submit name="updateStanderd" value="{{Standerd.Id}}" class="btn btn-primary">Update</button>
         </form>

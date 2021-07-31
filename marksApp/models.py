@@ -25,7 +25,8 @@ class Standerd(models.Model):
 
 
 class studentInfo(models.Model):
-    HR_No = models.CharField(max_length=20, primary_key=True)
+    id = models.AutoField(primary_key=True)
+    HR_No = models.CharField(max_length=20)
     first_name = models.CharField(max_length=50)
     Middle_name = models.CharField(max_length=50)
     Last_name = models.CharField(max_length=50)
